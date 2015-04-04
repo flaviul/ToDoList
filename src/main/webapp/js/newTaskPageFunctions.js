@@ -8,6 +8,7 @@ function saveNewTask() {
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             $('#message-area').show();
+            $('#new-task').val('');
         }
     }
     xmlHttp.open('POST', '/servlet', true);
