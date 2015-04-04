@@ -1,0 +1,58 @@
+body {
+    background-color:floralwhite;
+}
+
+
+#header h1 {
+    background-color: #324422;
+    color: white;
+}
+
+/*sitebranding animation*/
+#sitebranding{
+    -webkit-animation-name: tinRightIn;
+    -webkit-animation-duration: 1s;
+}
+@-webkit-keyframes tinRightIn {
+    0% {
+        opacity: 0;
+        -webkit-transform: scale(1, 1) translateX(900%);
+    }
+
+    50%, 70%, 90% {
+        opacity: 1;
+        -webkit-transform: scale(1.1, 1.1) translateX(0);
+    }
+
+    60%, 80%, 100% {
+        opacity: 1;
+        -webkit-transform: scale(1, 1) translateX(0);
+    }
+}
+
+#tagline p {
+    background-color: #6e2207;
+}
+
+/* tagline animation*/
+
+#tagline p{
+    -webkit-animation-name: puffIn;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-delay: 1s;
+}
+@-webkit-keyframes puffIn {
+    0% {
+        opacity: 0;
+        -webkit-transform-origin: 50% 50%;
+        -webkit-transform: scale(2,2);
+        -webkit-filter: blur(2px);
+    }
+
+    100% {
+        opacity: 1;
+        -webkit-transform-origin: 50% 50%;
+        -webkit-transform: scale(1,1);
+        -webkit-filter: blur(0px);
+    }
+}
