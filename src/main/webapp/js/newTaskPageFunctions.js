@@ -4,14 +4,15 @@
 
 function saveNewTask() {
     var task = $('#new-task').val();
+    var list = 'test';
     xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             $('#message-area').show();
             $('#new-task').val('');
         }
-    }
-    xmlHttp.open('POST', '/servlet', true);
+    };
+    xmlHttp.open('POST', '/addItemServlet', true);
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-    xmlHttp.send("newTask=" + task);
+    xmlHttp.send("listName=" + list + "&newTask=" + task);
 }

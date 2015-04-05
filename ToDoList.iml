@@ -25,5 +25,6 @@
     <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:3.8.1" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
+    <orderEntry type="library" name="postgresql-9.4-1201.jdbc41" level="project" />
   </component>
 </module>
