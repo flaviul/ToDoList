@@ -52,6 +52,7 @@ function addNewList() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             $('#message-area').show();
             $('#new-list').val('');
+            showActiveLists();
         }
     };
     xmlHttp.open('POST', '/addListServlet', true);
