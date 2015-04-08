@@ -26,10 +26,10 @@ public class AddListServlet extends HttpServlet{
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendError(400, "Failed to add to-do list.");
+            response.sendError(400, "Failed to add to-do list. SQL errors encountered.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            response.sendError(400, "Failed to add to-do list.");
+            response.sendError(400, "Failed to add to-do list. Could not load jdbc driver.");
         }
 
     }

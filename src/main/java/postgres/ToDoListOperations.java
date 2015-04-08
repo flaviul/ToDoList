@@ -2,7 +2,10 @@ package postgres;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Flaviu Ratiu on 05/04/2015.
@@ -31,6 +34,21 @@ public class ToDoListOperations {
         connection.close();
 
         return successfulOperation;
+    }
+
+    public static List<String> activeLists() throws SQLException, ClassNotFoundException {
+        PostgresConnection postgres = new PostgresConnection();
+        Connection connection = postgres.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + ";",
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<String> activeLists = new ArrayList<String>();
+        while (resultSet.next()){
+            activeLists.add(resultSet.getString(NAME_COLUMN));
+        }
+        return activeLists;
     }
 
 

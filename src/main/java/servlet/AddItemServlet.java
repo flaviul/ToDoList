@@ -27,10 +27,10 @@ public class AddItemServlet extends HttpServlet {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            response.sendError(400, "Failed to add task to the list.");
+            response.sendError(400, "Failed to add task. SQL errors encountered.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            response.sendError(400, "Failed to add task to the list.");
+            response.sendError(400, "Failed to add task. Could not load jdbc driver.");
         }
 
     }

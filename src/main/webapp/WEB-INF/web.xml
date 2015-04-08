@@ -24,4 +24,14 @@
         <url-pattern>/addListServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GetActiveListsServlet</servlet-name>
+        <servlet-class>servlet.GetActiveListsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetActiveListsServlet</servlet-name>
+        <url-pattern>/getActiveListsServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>
