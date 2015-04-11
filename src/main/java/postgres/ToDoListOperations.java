@@ -28,15 +28,13 @@ public class ToDoListOperations {
         preparedStatement.setObject(2, sqlDate);
 
         int insertedRows = preparedStatement.executeUpdate();
-        boolean successfulOperation = false;
-
-        if (insertedRows > 0) {
-            successfulOperation = true;
-        }
-
         preparedStatement.close();
         connection.close();
 
+        boolean successfulOperation = false;
+        if (insertedRows > 0) {
+            successfulOperation = true;
+        }
         return successfulOperation;
     }
 
@@ -52,6 +50,11 @@ public class ToDoListOperations {
         while (resultSet.next()){
             activeLists.add(resultSet.getString(NAME_COLUMN));
         }
+
+        preparedStatement.close();
+        resultSet.close();
+        connection.close();
+
         return activeLists;
     }
 
@@ -68,6 +71,11 @@ public class ToDoListOperations {
         if (resultSet.next()){
             listId = resultSet.getInt(ID_COLUMN);
         }
+
+        preparedStatement.close();
+        resultSet.close();
+        connection.close();
+
         return listId;
     }
 
@@ -83,6 +91,11 @@ public class ToDoListOperations {
         if (resultSet.next()){
             latestList = resultSet.getString(NAME_COLUMN);
         }
+
+        preparedStatement.close();
+        resultSet.close();
+        connection.close();
+
         return latestList;
     }
 

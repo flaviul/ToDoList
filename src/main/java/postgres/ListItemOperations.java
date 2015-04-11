@@ -10,6 +10,7 @@ import java.util.List;
 public class ListItemOperations {
 
     private static final String TABLE_NAME = "list_items";
+    private static final String ITEM_ID_COLUMN = "item_id";
     private static final String LIST_ID_COLUMN = "list_id";
     private static final String ITEM_CONTENT_COLUMN = "item_content";
     private static final String CREATED_AT_COLUMN = "created_at";
@@ -68,10 +69,38 @@ public class ListItemOperations {
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<String> currentTasks = new ArrayList<String>();
-        while (resultSet.next()){
+        while (resultSet.next()) {
             currentTasks.add(resultSet.getString(ITEM_CONTENT_COLUMN));
         }
+        preparedStatement.close();
+        resultSet.close();
+        connection.close();
+
         return currentTasks;
+    }
+
+    public static boolean markTaskDone(int taskId) throws SQLException, ClassNotFoundException {
+        PostgresConnection postgres = new PostgresConnection();
+        Connection connection = postgres.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("update " + TABLE_NAME + " set " + STATUS_COLUMN + " = ?" + ", " +
+                DONE_AT_COLUMN + " = ? where " + ITEM_ID_COLUMN + " = ?;");
+        preparedStatement.setBoolean(1, true);
+        // Getting the current date in java.sql.Date format
+        java.util.Date utilDate = new java.util.Date();
+        Object sqlDate = new Timestamp(utilDate.getTime());
+        preparedStatement.setObject(2, sqlDate);
+        preparedStatement.setInt(3, taskId);
+
+        int updatedRows = preparedStatement.executeUpdate();
+        preparedStatement.close();
+        connection.close();
+
+        boolean successfulOperation = false;
+        if (updatedRows > 0) {
+            successfulOperation = true;
+        }
+        return successfulOperation;
     }
 
 }
