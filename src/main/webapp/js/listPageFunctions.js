@@ -103,7 +103,6 @@ function showCurrentListDetails(list_name){
     showCurrentTasks(list_name);
 }
 
-
 // On page load, displays tasks from the latest list.
 (function() {
     $.ajax({
@@ -116,8 +115,6 @@ function showCurrentListDetails(list_name){
             showCurrentListDetails(latest_list);
         });
 })();
-
-
 
 function saveNewTask() {
     var task = $('#new-task').val();
