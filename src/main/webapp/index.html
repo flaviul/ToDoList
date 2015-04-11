@@ -26,8 +26,8 @@
     <div id="lists-container">
         <h2>Active to-do lists</h2>
 
-        <div class="hidden confirmation-message">
-            <p>Item marked as done</p>
+        <div class="hidden confirmation-message" id="list-added-message">
+            <p>New to-do list added.</p>
         </div>
         <ul id="active-lists">
         </ul>
@@ -52,10 +52,12 @@
         <h1>Current tasks</h1>
         <h4></h4>
 
-        <div class="hidden confirmation-message" id="message-area">
+        <div class="hidden confirmation-message" id="task-done-message">
             <p>Item marked as done</p>
         </div>
-
+        <div class="hidden confirmation-message" id="task-added-message">
+            <p>New task successfully added to the list</p>
+        </div>
 
         <form id="to-do-list-form">
             <div id="empty-list-message" class="hidden">
@@ -69,9 +71,6 @@
         </form>
 
         <div>
-            <div class="hidden confirmation-message">
-                <p>New task successfully added to your To-Do List</p>
-            </div>
             <form>
                 <div>
                     <label for="new-task">New task:</label>

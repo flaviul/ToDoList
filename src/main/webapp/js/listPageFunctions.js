@@ -49,7 +49,7 @@ function addNewList() {
     xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            $('#message-area').show();
+            $('#list-added-message').show();
             $('#new-list').val('');
             showActiveLists();
         }
@@ -110,8 +110,9 @@ function saveNewTask() {
     xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            $('#message-area').show();
+            $('#task-added-message').show();
             $('#new-task').val('');
+            showCurrentTasks(list);
         }
     };
     xmlHttp.open('POST', '/addItemServlet', true);
@@ -119,5 +120,10 @@ function saveNewTask() {
     xmlHttp.send("listName=" + list + "&newTask=" + task);
 }
 
+(function(){
+    document.getElementsByTagName('body')[0].onclick = function(){
+        $('.confirmation-message').hide();
+    }
+})();
 
 showActiveLists();
