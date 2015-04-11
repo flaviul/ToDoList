@@ -79,7 +79,7 @@ function generateTasksHtml(json){
             checkbox.class = 'task';
 
             label.appendChild(checkbox);
-            label.innerHTML = tasks[i];
+            label.innerHTML += tasks[i];
             list_item.appendChild(label);
             current_list.appendChild(list_item);
         }
