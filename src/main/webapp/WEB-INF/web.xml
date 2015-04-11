@@ -34,4 +34,14 @@
         <url-pattern>/getActiveListsServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>GetCurrentTasksServlet</servlet-name>
+        <servlet-class>servlet.GetCurrentTasksServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GetCurrentTasksServlet</servlet-name>
+        <url-pattern>/getCurrentTasksServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

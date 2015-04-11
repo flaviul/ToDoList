@@ -51,5 +51,23 @@ public class ToDoListOperations {
         return activeLists;
     }
 
+    public static int getListId(String list_name) throws SQLException, ClassNotFoundException {
+        PostgresConnection postgres = new PostgresConnection();
+        Connection connection = postgres.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + ID_COLUMN + " from " + TABLE_NAME + " where " + NAME_COLUMN + " = ?;",
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        preparedStatement.setString(1, list_name);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        int listId = 0;
+        if (resultSet.next()){
+            listId = resultSet.getInt(ID_COLUMN);
+        }
+        return listId;
+    }
+
+
+
 
 }

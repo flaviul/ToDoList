@@ -22,47 +22,69 @@
 </div>
 
 <div id="content">
-    <div class="hidden confirmation-message" id="message-area">
-        <p>Item marked as done</p>
-    </div>
 
     <div id="lists-container">
         <h2>Active to-do lists</h2>
+
+        <div class="hidden confirmation-message">
+            <p>Item marked as done</p>
+        </div>
         <ul id="active-lists">
         </ul>
-    </div>
 
-    <div id="create-list">
-        <form>
-            <div>
-                <label for="new-list">New to-do list:</label>
-            </div>
-            <div>
-                <input type="text" id="new-list" class="text-field" value=""/>
-            </div>
-            <div>
-                <input type="button" id="save-list" class="button" value="Add list" onclick="addNewList()"/>
-            </div>
-        </form>
-    </div>
-
-    <div>
-        <h1>Current tasks</h1>
-    </div>
-
-    <form id="to-do-list-form">
-        <div id="empty-list-message" class="hidden">
-            <p>Currently there are no tasks defined in this list.</p>
+        <div id="create-list">
+            <form>
+                <div>
+                    <label for="new-list">New to-do list:</label>
+                </div>
+                <div>
+                    <input type="text" id="new-list" class="text-field" value=""/>
+                </div>
+                <div>
+                    <input type="button" id="save-list" class="button" value="Add list" onclick="addNewList()"/>
+                </div>
+            </form>
         </div>
-        <ul id="to-do-list">
-            <li>
-                <label><input type="checkbox" class="task"/>Task 1</label>
-            </li>
-        </ul>
-    </form>
+    </div>
 
-    <div>
-        <input type="button" id="add-task-button" class="button" value="Add new task" onclick="newTask()"/>
+
+    <div id="current-list-details">
+        <h1>Current tasks</h1>
+        <h4></h4>
+
+        <div class="hidden confirmation-message" id="message-area">
+            <p>Item marked as done</p>
+        </div>
+
+
+        <form id="to-do-list-form">
+            <div id="empty-list-message" class="hidden">
+                <p>Currently there are no tasks defined in this list.</p>
+            </div>
+            <ul id="to-do-list">
+                <li>
+                    <label><input type="checkbox" class="task"/>Task 1</label>
+                </li>
+            </ul>
+        </form>
+
+        <div>
+            <div class="hidden confirmation-message">
+                <p>New task successfully added to your To-Do List</p>
+            </div>
+            <form>
+                <div>
+                    <label for="new-task">New task:</label>
+                </div>
+                <div>
+                    <input type="text" id="new-task" class="text-field" value=""/>
+                </div>
+                <div>
+                    <input type="button" id="save-task" class="button" value="Save task" onclick="saveNewTask()"/>
+                </div>
+            </form>
+        </div>
+
     </div>
 </div>
 

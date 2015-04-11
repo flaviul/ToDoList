@@ -1,5 +1,6 @@
 package servlet;
 
+import postgres.ListItemOperations;
 import postgres.ToDoListOperations;
 
 import javax.servlet.http.HttpServlet;
@@ -12,17 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Flaviu Ratiu on 06/04/2015.
+ * Created by Flaviu Ratiu on 11/04/2015.
  */
-public class GetActiveListsServlet extends HttpServlet {
-    public static final String GET_LISTS_PARAMETER = "getActiveLists";
+public class GetCurrentTasksServlet extends HttpServlet{
+    public static final String GET_TASKS_PARAMETER = "getCurrentTasks";
+    public static final String PARENT_LIST_PARAMETER = "parentListName";
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int parentListId;
         // Getting all active lists from the database
-        List<String> activeLists = new ArrayList<String>();
-        if (Boolean.valueOf(request.getParameter(GET_LISTS_PARAMETER))) {
+        List<String> currentTasks = new ArrayList<String>();
+        if (Boolean.valueOf(request.getParameter(GET_TASKS_PARAMETER))) {
             try {
-                activeLists = ToDoListOperations.activeLists();
+                parentListId = ToDoListOperations.getListId(request.getParameter(PARENT_LIST_PARAMETER));
+                currentTasks = ListItemOperations.getCurrentTasks(parentListId);
             } catch (SQLException e) {
                 e.printStackTrace();
                 response.sendError(400, "SQL errors encountered.");
@@ -33,19 +37,19 @@ public class GetActiveListsServlet extends HttpServlet {
         }
 
         // Building the json object containing the names of all active lists
-        int listsCount = activeLists.size();
-        String jsonObject = "{\"lists\": [";
-        if (listsCount > 0) {
+        int tasksCount = currentTasks.size();
+        String jsonObject = "{\"tasks\": [";
+        if (tasksCount > 0) {
 
-            for (int i = 0; i < listsCount; i++) {
-                jsonObject += "\"" + activeLists.get(i) + "\"";
-                if (i < listsCount - 1) {
+            for (int i = 0; i < tasksCount; i++) {
+                jsonObject += "\"" + currentTasks.get(i) + "\"";
+                if (i < tasksCount - 1) {
                     jsonObject += ", ";
                 }
             }
             jsonObject += "]}";
         } else {
-            jsonObject = "{\"noActiveLists\":true}";
+            jsonObject = "{\"noActiveTasks\":true}";
         }
 
         // Sending over the json object

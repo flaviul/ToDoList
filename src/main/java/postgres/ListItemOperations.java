@@ -1,6 +1,8 @@
 package postgres;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Flaviu Ratiu on 05/04/2015.
@@ -53,6 +55,23 @@ public class ListItemOperations {
             successfulOperation = true;
         }
         return successfulOperation;
+    }
+
+    public static List<String> getCurrentTasks(int parentListId) throws SQLException, ClassNotFoundException {
+        PostgresConnection postgres = new PostgresConnection();
+        Connection connection = postgres.getConnection();
+
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + ITEM_CONTENT_COLUMN + " from " + TABLE_NAME
+                        + " where " + LIST_ID_COLUMN + " = ? and " + STATUS_COLUMN + " != true;",
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        preparedStatement.setInt(1, parentListId);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<String> currentTasks = new ArrayList<String>();
+        while (resultSet.next()){
+            currentTasks.add(resultSet.getString(ITEM_CONTENT_COLUMN));
+        }
+        return currentTasks;
     }
 
 }
