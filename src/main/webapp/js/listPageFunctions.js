@@ -104,6 +104,21 @@ function showCurrentListDetails(list_name){
 }
 
 
+// On page load, displays tasks from the latest list.
+(function() {
+    $.ajax({
+        url: './getActiveListsServlet',
+        dataType: 'json',
+        data: {getLatestList: true},
+        method: 'POST'})
+        .done(function(response){
+            var latest_list = response.lists[0];
+            showCurrentListDetails(latest_list);
+        });
+})();
+
+
+
 function saveNewTask() {
     var task = $('#new-task').val();
     var list = document.getElementById('current-list-details').getElementsByTagName('h4')[0].innerHTML;

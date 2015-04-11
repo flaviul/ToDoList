@@ -16,6 +16,7 @@ import java.util.List;
  */
 public class GetActiveListsServlet extends HttpServlet {
     public static final String GET_LISTS_PARAMETER = "getActiveLists";
+    public static final String GET_LATEST_LIST_PARAMETER = "getLatestList";
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         // Getting all active lists from the database
@@ -23,6 +24,18 @@ public class GetActiveListsServlet extends HttpServlet {
         if (Boolean.valueOf(request.getParameter(GET_LISTS_PARAMETER))) {
             try {
                 activeLists = ToDoListOperations.activeLists();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                response.sendError(400, "SQL errors encountered.");
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+                response.sendError(400, "Failed to load jdbc driver.");
+            }
+        }
+        else if (Boolean.valueOf(request.getParameter(GET_LATEST_LIST_PARAMETER))){
+            try {
+                activeLists.clear();
+                activeLists.add(ToDoListOperations.getLatestList());
             } catch (SQLException e) {
                 e.printStackTrace();
                 response.sendError(400, "SQL errors encountered.");

@@ -43,8 +43,8 @@ public class ListItemOperations {
 
         // Getting the current date in java.sql.Date format
         java.util.Date utilDate = new java.util.Date();
-        Date sqlDate = new Date(utilDate.getTime());
-        preparedStatement.setDate(3, sqlDate);
+        Object sqlDate = new Timestamp(utilDate.getTime());
+        preparedStatement.setObject(3, sqlDate);
 
         int insertedRows = preparedStatement.executeUpdate();
         preparedStatement.close();
