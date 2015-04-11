@@ -99,7 +99,7 @@ function showCurrentTasks(parent_list) {
 
 function showCurrentListDetails(list_name){
     //$('#current-list-details').find('h2').innerHTML = list_name;
-    document.getElementById('current-list-details').getElementsByTagName('h4')[0].innerHTML = list_name;
+    document.getElementById('current-list-title').innerHTML = list_name;
     showCurrentTasks(list_name);
 }
 
@@ -118,7 +118,7 @@ function showCurrentListDetails(list_name){
 
 function saveNewTask() {
     var task = $('#new-task').val();
-    var list = document.getElementById('current-list-details').getElementsByTagName('h4')[0].innerHTML;
+    var list = document.getElementById('current-list-title').innerHTML;
     xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
