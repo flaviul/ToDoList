@@ -146,6 +146,9 @@ function saveNewTask() {
     xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            if (xmlHttp.responseText.contains("duplicateError: true")){
+                alert("Identical tasks (done or in progress) are already present in this to-do list. Please enter a unique task.");
+            }
             $('#task-added-message').show();
             $('#new-task').val('');
             showCurrentTasks(list);
