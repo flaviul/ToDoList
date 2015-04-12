@@ -148,10 +148,11 @@ function saveNewTask() {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
             if (xmlHttp.responseText.contains("duplicateError: true")){
                 alert("Identical tasks (done or in progress) are already present in this to-do list. Please enter a unique task.");
+            } else {
+                $('#task-added-message').show();
+                $('#new-task').val('');
+                showCurrentTasks(list);
             }
-            $('#task-added-message').show();
-            $('#new-task').val('');
-            showCurrentTasks(list);
         }
     };
     xmlHttp.open('POST', '/addItemServlet', true);
