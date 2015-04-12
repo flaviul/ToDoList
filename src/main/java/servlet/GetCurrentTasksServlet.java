@@ -25,7 +25,7 @@ public class GetCurrentTasksServlet extends HttpServlet{
         List<String> currentTasks = new ArrayList<String>();
         if (Boolean.valueOf(request.getParameter(GET_TASKS_PARAMETER))) {
             try {
-                parentListId = ToDoListOperations.getListId(request.getParameter(PARENT_LIST_PARAMETER));
+                parentListId = ToDoListOperations.connectAndGetListId(request.getParameter(PARENT_LIST_PARAMETER));
                 currentTasks = ListItemOperations.getCurrentTasks(parentListId);
             } catch (SQLException e) {
                 e.printStackTrace();

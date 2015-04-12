@@ -79,18 +79,21 @@ public class ListItemOperations {
         return currentTasks;
     }
 
-    public static boolean markTaskDone(int taskId) throws SQLException, ClassNotFoundException {
+    public static boolean markTaskDone(String parentListName, String taskContent) throws SQLException, ClassNotFoundException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
+        int parentListId = ToDoListOperations.getListId(parentListName, connection);
+
         PreparedStatement preparedStatement = connection.prepareStatement("update " + TABLE_NAME + " set " + STATUS_COLUMN + " = ?" + ", " +
-                DONE_AT_COLUMN + " = ? where " + ITEM_ID_COLUMN + " = ?;");
+                DONE_AT_COLUMN + " = ? where " + LIST_ID_COLUMN + " = ? and " + ITEM_CONTENT_COLUMN + " = ?;");
         preparedStatement.setBoolean(1, true);
         // Getting the current date in java.sql.Date format
         java.util.Date utilDate = new java.util.Date();
         Object sqlDate = new Timestamp(utilDate.getTime());
         preparedStatement.setObject(2, sqlDate);
-        preparedStatement.setInt(3, taskId);
+        preparedStatement.setInt(3, parentListId);
+        preparedStatement.setString(4, taskContent);
 
         int updatedRows = preparedStatement.executeUpdate();
         preparedStatement.close();

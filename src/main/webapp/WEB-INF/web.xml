@@ -44,4 +44,14 @@
         <url-pattern>/getCurrentTasksServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UpdateItemServlet</servlet-name>
+        <servlet-class>servlet.UpdateItemServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateItemServlet</servlet-name>
+        <url-pattern>/updateItemServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

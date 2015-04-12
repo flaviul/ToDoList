@@ -1,8 +1,6 @@
 package postgres;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,13 +56,10 @@ public class ToDoListOperations {
         return activeLists;
     }
 
-    public static int getListId(String list_name) throws SQLException, ClassNotFoundException {
-        PostgresConnection postgres = new PostgresConnection();
-        Connection connection = postgres.getConnection();
-
+    public static int getListId(String listName, Connection connection) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement("select " + ID_COLUMN + " from " + TABLE_NAME + " where " + NAME_COLUMN + " = ?;",
                 ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-        preparedStatement.setString(1, list_name);
+        preparedStatement.setString(1, listName);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         int listId = 0;
@@ -74,8 +69,15 @@ public class ToDoListOperations {
 
         preparedStatement.close();
         resultSet.close();
-        connection.close();
 
+        return listId;
+    }
+
+    public static int connectAndGetListId(String listName) throws SQLException, ClassNotFoundException {
+        PostgresConnection postgres = new PostgresConnection();
+        Connection connection = postgres.getConnection();
+        int listId = getListId(listName, connection);
+        connection.close();
         return listId;
     }
 
