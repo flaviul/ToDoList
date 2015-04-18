@@ -84,13 +84,13 @@ public class ToDoListOperations {
         return listId;
     }
 
-    public static String getLatestList() throws SQLException, ClassNotFoundException {
+    public static String getLatestList(int userId) throws SQLException, ClassNotFoundException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " where " + USER_ID_COLUMN + " = ? " + " order by " + CREATED_AT_COLUMN + " desc limit 1;",
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " where " + USER_ID_COLUMN + " = ? order by " + CREATED_AT_COLUMN + " desc limit 1;",
                 ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-//        preparedStatement.setInt(userId);
+        preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         String latestList = null;

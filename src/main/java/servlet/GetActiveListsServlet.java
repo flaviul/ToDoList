@@ -39,7 +39,7 @@ public class GetActiveListsServlet extends HttpServlet {
         else if (Boolean.valueOf(request.getParameter(GET_LATEST_LIST_PARAMETER))){
             try {
                 activeLists.clear();
-                activeLists.add(ToDoListOperations.getLatestList());
+                activeLists.add(ToDoListOperations.getLatestList(currentUserId));
             } catch (SQLException e) {
                 e.printStackTrace();
                 response.sendError(400, "SQL errors encountered.");
