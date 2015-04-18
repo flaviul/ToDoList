@@ -62,10 +62,11 @@ public class ToDoListOperations {
         return activeLists;
     }
 
-    public static int getListId(String listName, Connection connection) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement("select " + ID_COLUMN + " from " + TABLE_NAME + " where " + NAME_COLUMN + " = ?;",
+    public static int getListId(int userId, String listName, Connection connection) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + ID_COLUMN + " from " + TABLE_NAME + " where " + NAME_COLUMN + " = ? and " + USER_ID_COLUMN + "= ?;",
                 ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         preparedStatement.setString(1, listName);
+        preparedStatement.setInt(2, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         int listId = 0;
@@ -79,10 +80,10 @@ public class ToDoListOperations {
         return listId;
     }
 
-    public static int connectAndGetListId(String listName) throws SQLException, ClassNotFoundException {
+    public static int connectAndGetListId(int userId, String listName) throws SQLException, ClassNotFoundException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
-        int listId = getListId(listName, connection);
+        int listId = getListId(userId, listName, connection);
         connection.close();
         return listId;
     }
@@ -108,11 +109,11 @@ public class ToDoListOperations {
         return latestList;
     }
 
-    public static boolean markListDone(String listName) throws SQLException, ClassNotFoundException {
+    public static boolean markListDone(int userId, String listName) throws SQLException, ClassNotFoundException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
-        int listId = ToDoListOperations.getListId(listName, connection);
+        int listId = ToDoListOperations.getListId(userId, listName, connection);
 
         PreparedStatement preparedStatement = connection.prepareStatement("update " + TABLE_NAME + " set " + STATUS_COLUMN + " = ?" + ", " +
                 DONE_AT_COLUMN + " = ? where " + ID_COLUMN + " = ?;");

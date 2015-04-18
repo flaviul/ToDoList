@@ -5,6 +5,7 @@ import postgres.ToDoListOperations;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -22,11 +23,13 @@ public class UpdateListServlet extends HttpServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String listName = request.getParameter(LIST_NAME_PARAMETER);
         int requestedAction = Integer.parseInt(request.getParameter(ACTION_PARAMETER));
+        HttpSession session = request.getSession(true);
+        int userId = (Integer)session.getAttribute(LoginServlet.USER_ID_PARAMETER);
 
         switch (requestedAction) {
             case MARK_DONE_ACTION:
                 try {
-                    if (!ToDoListOperations.markListDone(listName)) {
+                    if (!ToDoListOperations.markListDone(userId, listName)) {
                         response.sendError(400, "Failed to mark task as done.");
                     }
                 } catch (SQLException e) {

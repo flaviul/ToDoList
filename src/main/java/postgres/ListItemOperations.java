@@ -79,11 +79,11 @@ public class ListItemOperations {
         return currentTasks;
     }
 
-    public static boolean markTaskDone(String parentListName, String taskContent) throws SQLException, ClassNotFoundException {
+    public static boolean markTaskDone(int userId, String parentListName, String taskContent) throws SQLException, ClassNotFoundException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
-        int parentListId = ToDoListOperations.getListId(parentListName, connection);
+        int parentListId = ToDoListOperations.getListId(userId, parentListName, connection);
 
         PreparedStatement preparedStatement = connection.prepareStatement("update " + TABLE_NAME + " set " + STATUS_COLUMN + " = ?" + ", " +
                 DONE_AT_COLUMN + " = ? where " + LIST_ID_COLUMN + " = ? and " + ITEM_CONTENT_COLUMN + " = ?;");

@@ -6,6 +6,7 @@ import postgres.ToDoListOperations;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -20,12 +21,16 @@ public class GetCurrentTasksServlet extends HttpServlet{
     public static final String PARENT_LIST_PARAMETER = "parentListName";
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        HttpSession session = request.getSession(true);
+        int userId = (Integer)session.getAttribute(LoginServlet.USER_ID_PARAMETER);
+
         int parentListId;
         // Getting all active lists from the database
         List<String> currentTasks = new ArrayList<String>();
         if (Boolean.valueOf(request.getParameter(GET_TASKS_PARAMETER))) {
             try {
-                parentListId = ToDoListOperations.connectAndGetListId(request.getParameter(PARENT_LIST_PARAMETER));
+                parentListId = ToDoListOperations.connectAndGetListId(userId, request.getParameter(PARENT_LIST_PARAMETER));
                 currentTasks = ListItemOperations.getCurrentTasks(parentListId);
             } catch (SQLException e) {
                 e.printStackTrace();

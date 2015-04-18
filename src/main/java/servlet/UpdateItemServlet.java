@@ -5,6 +5,7 @@ import postgres.ListItemOperations;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
 
@@ -24,11 +25,13 @@ public class UpdateItemServlet extends HttpServlet {
         String listName = request.getParameter(LIST_NAME_PARAMETER);
         String currentTaskContent = request.getParameter(TASK_CONTENT_PARAMETER);
         int requestedAction = Integer.parseInt(request.getParameter(ACTION_PARAMETER));
+        HttpSession session = request.getSession(true);
+        int userId = (Integer)session.getAttribute(LoginServlet.USER_ID_PARAMETER);
 
         switch (requestedAction) {
             case MARK_DONE_ACTION:
                 try {
-                    if (!ListItemOperations.markTaskDone(listName, currentTaskContent)) {
+                    if (!ListItemOperations.markTaskDone(userId, listName, currentTaskContent)) {
                         response.sendError(400, "Failed to mark task as done.");
                     }
                 } catch (SQLException e) {
