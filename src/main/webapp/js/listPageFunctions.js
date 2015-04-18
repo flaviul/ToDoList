@@ -121,7 +121,6 @@ function showCurrentTasks(parent_list) {
 }
 
 function showCurrentListDetails(list_name) {
-    //$('#current-list-details').find('h2').innerHTML = list_name;
     document.getElementById('current-list-title').innerHTML = list_name;
     showCurrentTasks(list_name);
 }
