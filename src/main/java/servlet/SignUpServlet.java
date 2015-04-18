@@ -1,7 +1,7 @@
 package servlet;
 
-import postgres.ListItemOperations;
 import postgres.LoginOperations;
+import postgres.SignUpOperations;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,7 +14,7 @@ import java.sql.SQLException;
 /**
  * Created by Flaviu Ratiu on 18/04/2015.
  */
-public class LoginServlet extends HttpServlet {
+public class SignUpServlet extends HttpServlet {
 
     public static final String USERNAME_PARAMETER = "username";
     public static final String USER_ID_PARAMETER = "userId";
@@ -22,11 +22,10 @@ public class LoginServlet extends HttpServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(true);
         String username = request.getParameter(USERNAME_PARAMETER);
-        System.out.println("Username " + username);
 
-        int currentUserId = 0;
+        int newUserId = 0;
         try {
-            currentUserId = LoginOperations.getUserId(username);
+            newUserId = SignUpOperations.insertUser(username);
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -34,11 +33,9 @@ public class LoginServlet extends HttpServlet {
         }
 
         String jsonObject = "{\"userId\":";
-        if (currentUserId > 0) {
-            jsonObject += +currentUserId + "}";
-            session.setAttribute(USER_ID_PARAMETER, currentUserId);
-        } else {
-            jsonObject = "{\"userNotFound\":true}";
+        if (newUserId > 0) {
+            jsonObject += +newUserId + "}";
+            session.setAttribute(USER_ID_PARAMETER, newUserId);
         }
 
         // Sending over the json object

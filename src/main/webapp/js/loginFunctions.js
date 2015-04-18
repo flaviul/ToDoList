@@ -13,7 +13,12 @@ function loginUser(){
         .done(function (response) {
 
             if (response.userNotFound){
-                alert('User not found');
+                if (confirm("User not found.\nDo you want to create a user?")){
+                    window.location = './signUp.html';
+                }
+                else {
+                    window.location = './login.html';
+                }
             }
             else {
                 //alert("The requested user's id is: " + response.userId);
