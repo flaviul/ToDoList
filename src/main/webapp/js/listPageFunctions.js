@@ -27,7 +27,17 @@ function generateListElements(json) {
         var lists = json.lists;
         for (var i = 0; i < lists.length; i++) {
             var to_do_list = document.createElement('li');
+            var checkbox = document.createElement('input');
             var list_link = document.createElement('a');
+
+            to_do_list.className = 'list-item';
+
+            checkbox.type = 'checkbox';
+            checkbox.className = 'list-checkbox';
+            checkbox.onchange = function () {
+                markListDone(this);
+            };
+
             list_link.href = '#';
             list_link.text = lists[i];
             list_link.className = 'to-do-list';
@@ -35,10 +45,26 @@ function generateListElements(json) {
                 showCurrentListDetails(this.text)
             };
 
+            to_do_list.appendChild(checkbox);
             to_do_list.appendChild(list_link);
             active_lists.appendChild(to_do_list);
+
         }
     }
+}
+
+function markListDone(taskCheckbox) {
+    var listItem = taskCheckbox.parentNode;
+    var listName = listItem.getElementsByTagName('a')[0].text;
+    var lists_container = document.getElementById('active-lists');
+
+    $.ajax({
+        url: './updateListServlet',
+        dataType: 'json',
+        data: {listName: listName, action: 0},
+        method: 'POST'
+    });
+    showActiveLists();
 }
 
 function clearNodeContent(node) {
@@ -145,7 +171,7 @@ function saveNewTask() {
     xmlHttp = new XMLHttpRequest();
     xmlHttp.onreadystatechange = function () {
         if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-            if (xmlHttp.responseText.contains("duplicateError: true")){
+            if (xmlHttp.responseText.contains("duplicateError: true")) {
                 alert("Identical tasks (done or in progress) are already present in this to-do list. Please enter a unique task.");
             } else {
                 $('#task-added-message').show();

@@ -74,4 +74,14 @@
         <url-pattern>/signUpServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UpdateListServlet</servlet-name>
+        <servlet-class>servlet.UpdateListServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UpdateListServlet</servlet-name>
+        <url-pattern>/updateListServlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

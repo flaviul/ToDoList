@@ -14,6 +14,8 @@ public class ToDoListOperations {
     public static final String ID_COLUMN = "list_id";
     public static final String NAME_COLUMN = "list_name";
     public static final String CREATED_AT_COLUMN = "created_at";
+    public static final String STATUS_COLUMN = "done";
+    public static final String DONE_AT_COLUMN = "done_at";
 
     public static boolean addList(int userId, String listName) throws SQLException, ClassNotFoundException {
         PostgresConnection postgres = new PostgresConnection();
@@ -42,9 +44,10 @@ public class ToDoListOperations {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " where " + USER_ID_COLUMN + " = ?;",
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " where " + USER_ID_COLUMN + " = ? and " + STATUS_COLUMN + " = ?;",
                 ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         preparedStatement.setInt(1, userId);
+        preparedStatement.setBoolean(2, false);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<String> activeLists = new ArrayList<String>();
@@ -105,5 +108,30 @@ public class ToDoListOperations {
         return latestList;
     }
 
+    public static boolean markListDone(String listName) throws SQLException, ClassNotFoundException {
+        PostgresConnection postgres = new PostgresConnection();
+        Connection connection = postgres.getConnection();
+
+        int listId = ToDoListOperations.getListId(listName, connection);
+
+        PreparedStatement preparedStatement = connection.prepareStatement("update " + TABLE_NAME + " set " + STATUS_COLUMN + " = ?" + ", " +
+                DONE_AT_COLUMN + " = ? where " + ID_COLUMN + " = ?;");
+        preparedStatement.setBoolean(1, true);
+        // Getting the current date in java.sql.Date format
+        java.util.Date utilDate = new java.util.Date();
+        Object sqlDate = new Timestamp(utilDate.getTime());
+        preparedStatement.setObject(2, sqlDate);
+        preparedStatement.setInt(3, listId);
+
+        int updatedRows = preparedStatement.executeUpdate();
+        preparedStatement.close();
+        connection.close();
+
+        boolean successfulOperation = false;
+        if (updatedRows > 0) {
+            successfulOperation = true;
+        }
+        return successfulOperation;
+    }
 
 }

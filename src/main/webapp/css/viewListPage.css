@@ -1,3 +1,7 @@
 #to-do-list li{
     list-style-type: none;
 }
+
+.list-item {
+    list-style-type: none;
+}
