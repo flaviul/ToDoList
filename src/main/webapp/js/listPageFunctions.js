@@ -20,7 +20,8 @@ function generateListElements(json) {
     var active_lists = document.getElementById('active-lists');
     clearNodeContent(active_lists);
     if (json.noActiveLists) {
-        $('#empty-list-message').show();
+        $('#no-lists-message').show();
+        $('#current-list-details').hide();
     }
     else {
         $('#empty-list-message').hide();
@@ -81,6 +82,8 @@ function addNewList() {
             $('#list-added-message').show();
             $('#new-list').val('');
             showActiveLists();
+            $('#no-lists-message').hide();
+            $('#current-list-details').show();
         }
     };
     xmlHttp.open('POST', '/addListServlet', true);
