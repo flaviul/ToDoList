@@ -10,20 +10,22 @@ import java.util.List;
 public class ToDoListOperations {
 
     public static final String TABLE_NAME = "to_do_list";
+    public static final String USER_ID_COLUMN = "user_id";
     public static final String ID_COLUMN = "list_id";
     public static final String NAME_COLUMN = "list_name";
     public static final String CREATED_AT_COLUMN = "created_at";
 
-    public static boolean addList(String listName) throws SQLException, ClassNotFoundException {
+    public static boolean addList(int userId, String listName) throws SQLException, ClassNotFoundException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement("insert into " + TABLE_NAME + " (" + NAME_COLUMN + ", " + CREATED_AT_COLUMN + ") values (?, ?);");
+        PreparedStatement preparedStatement = connection.prepareStatement("insert into " + TABLE_NAME + " (" + NAME_COLUMN + ", " + CREATED_AT_COLUMN + ", " + USER_ID_COLUMN +") values (?, ?, ?);");
         preparedStatement.setString(1, listName);
         // Getting the current date in java.sql.Date format
         java.util.Date utilDate = new java.util.Date();
         Object sqlDate = new Timestamp(utilDate.getTime());
         preparedStatement.setObject(2, sqlDate);
+        preparedStatement.setInt(3, userId);
 
         int insertedRows = preparedStatement.executeUpdate();
         preparedStatement.close();
@@ -36,12 +38,13 @@ public class ToDoListOperations {
         return successfulOperation;
     }
 
-    public static List<String> activeLists() throws SQLException, ClassNotFoundException {
+    public static List<String> activeLists(int userId) throws SQLException, ClassNotFoundException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + ";",
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " where " + USER_ID_COLUMN + " = ?;",
                 ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        preparedStatement.setInt(1, userId);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<String> activeLists = new ArrayList<String>();
@@ -85,8 +88,9 @@ public class ToDoListOperations {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " order by " + CREATED_AT_COLUMN + " desc limit 1;",
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " where " + USER_ID_COLUMN + " = ? " + " order by " + CREATED_AT_COLUMN + " desc limit 1;",
                 ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+//        preparedStatement.setInt(userId);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         String latestList = null;

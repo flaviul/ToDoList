@@ -5,6 +5,7 @@ import postgres.ToDoListOperations;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -19,11 +20,14 @@ public class GetActiveListsServlet extends HttpServlet {
     public static final String GET_LATEST_LIST_PARAMETER = "getLatestList";
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(true);
+        int currentUserId = (Integer)session.getAttribute(LoginServlet.USER_ID_PARAMETER);
+
         // Getting all active lists from the database
         List<String> activeLists = new ArrayList<String>();
         if (Boolean.valueOf(request.getParameter(GET_LISTS_PARAMETER))) {
             try {
-                activeLists = ToDoListOperations.activeLists();
+                activeLists = ToDoListOperations.activeLists(currentUserId);
             } catch (SQLException e) {
                 e.printStackTrace();
                 response.sendError(400, "SQL errors encountered.");

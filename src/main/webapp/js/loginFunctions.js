@@ -11,12 +11,13 @@ function loginUser(){
         method: 'POST'
     })
         .done(function (response) {
-            alert(response);
-            //if (response) {
-            //}
-            //else {
-            //    // TODO: add create user methods
-            //    alert('User does not exist');
-            //}
+
+            if (response.userNotFound){
+                alert('User not found');
+            }
+            else {
+                //alert("The requested user's id is: " + response.userId);
+                window.location = './listPage.html';
+            }
         });
 }
