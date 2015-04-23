@@ -32,4 +32,23 @@ public class LoginOperations {
 
         return userId;
     }
+
+    public static String getUsername(int userId) throws SQLException, ClassNotFoundException {
+        PostgresConnection postgres = new PostgresConnection();
+        Connection connection = postgres.getConnection();
+
+        // Getting the list id
+        PreparedStatement getUserNameQuery = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME +
+                        " where " + ID_COLUMN + " = ?;",
+                ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+        getUserNameQuery.setInt(1, userId);
+        ResultSet resultSet = getUserNameQuery.executeQuery();
+        resultSet.next();
+        String userName = resultSet.getString(NAME_COLUMN);
+        getUserNameQuery.close();
+        resultSet.close();
+        connection.close();
+
+        return userName;
+    }
 }

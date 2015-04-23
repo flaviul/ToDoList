@@ -5,18 +5,10 @@
 
 }
 
-
-#tagline{
-    position: fixed;
-    left:100px;
-
-}
-
 #bodyimage{
     background-image: url("/images/woodbackground.jpg") ;
     background-size: 1370px 700px;
     background-repeat: no-repeat;;
-
 }
 
 
@@ -169,3 +161,14 @@
     color: #d8d4ea;
 }
 
+.hidden {
+    display: none;
+}
+
+#user-details {
+    color: white;
+}
+
+li {
+    list-style: none;
+}
