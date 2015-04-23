@@ -1,0 +1,67 @@
+#header{
+    height: 100px;
+}
+
+div{
+    background-color: #168d27;
+}
+
+body {
+    font-family: Verdana, Helvetica, Arial, sans-serif;
+    line-height: 125%;
+    padding: 0;
+    margin: 0;
+    background-color: black;
+}
+
+
+#header h1 {
+    font-size: large;
+    padding-top: 2em;
+    padding-bottom: .2em;
+    padding-left: .4em;
+    margin: 0;
+    color: red;
+}
+
+#content{
+    background-color: black;
+}
+
+.bodycontent{
+    background-color: black;
+}
+
+#sitebranding{
+    position: relative;
+    left: 600px;
+
+}
+
+.enterusername{
+    position: relative;
+    left: 550px;
+}
+
+
+#tagline{
+    position: relative;
+    left: 550px;
+}
+#username {
+    position: relative;
+
+}
+#usernametext {
+    position: relative;
+    left: 20px;
+}
+#login{
+    position: relative;
+    left: 60px;
+}
+
+/* hidden elements */
+.hidden {
+    display: none;
+}

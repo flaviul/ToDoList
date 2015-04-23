@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head id="head">
     <title>Login</title>
     <meta charset="utf-8"/>
-    <link href="css/defaultTheme.css" rel="stylesheet" type="text/css"/>
-    <link href="css/commonStyling.css" rel="stylesheet" type="text/css"/>
-    <link href="css/viewListPage.css" rel="stylesheet" type="text/css"/>
+
+    <link href="css/login.css" rel="stylesheet" type="text/css"/>
 </head>
 
 <body>
@@ -22,14 +21,14 @@
 
 <div id="login-form">
     <form>
-        <div>
-            <label for="username">Enter user name:</label>
+        <div class="enterusername">
+            <label id="usernametext" for="username">Enter user name:</label>
         </div>
-        <div>
+        <div class="enterusername">
             <input type="text" id="username" class="text-field" value=""/>
         </div>
-        <div>
-            <input type="button" id="login" class="button" value="Login" onclick="loginUser()"/>
+        <div class="enterusername">
+            <input  type="button" id="login" class="button" value="Login" onclick="loginUser()"/>
         </div>
     </form>
 </div>
