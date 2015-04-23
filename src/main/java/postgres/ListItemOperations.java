@@ -9,13 +9,13 @@ import java.util.List;
  */
 public class ListItemOperations {
 
-    private static final String TABLE_NAME = "list_items";
-    private static final String ITEM_ID_COLUMN = "item_id";
-    private static final String LIST_ID_COLUMN = "list_id";
-    private static final String ITEM_CONTENT_COLUMN = "item_content";
-    private static final String CREATED_AT_COLUMN = "created_at";
-    private static final String STATUS_COLUMN = "done";
-    private static final String DONE_AT_COLUMN = "done_at";
+    public static final String TABLE_NAME = "list_items";
+    public static final String ITEM_ID_COLUMN = "item_id";
+    public static final String LIST_ID_COLUMN = "list_id";
+    public static final String ITEM_CONTENT_COLUMN = "item_content";
+    public static final String CREATED_AT_COLUMN = "created_at";
+    public static final String STATUS_COLUMN = "done";
+    public static final String DONE_AT_COLUMN = "done_at";
 
 
     public static boolean addItem(String listName, String itemContent) throws SQLException, ClassNotFoundException {

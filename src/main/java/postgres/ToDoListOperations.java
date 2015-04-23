@@ -92,9 +92,11 @@ public class ToDoListOperations {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
-        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " where " + USER_ID_COLUMN + " = ? order by " + CREATED_AT_COLUMN + " desc limit 1;",
+        PreparedStatement preparedStatement = connection.prepareStatement("select " + NAME_COLUMN + " from " + TABLE_NAME + " where " +
+                        USER_ID_COLUMN + " = ? and " + STATUS_COLUMN + " = ? order by " + CREATED_AT_COLUMN + " desc limit 1;",
                 ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
         preparedStatement.setInt(1, userId);
+        preparedStatement.setBoolean(2, false);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         String latestList = null;
@@ -115,17 +117,28 @@ public class ToDoListOperations {
 
         int listId = ToDoListOperations.getListId(userId, listName, connection);
 
-        PreparedStatement preparedStatement = connection.prepareStatement("update " + TABLE_NAME + " set " + STATUS_COLUMN + " = ?" + ", " +
+        PreparedStatement updateList = connection.prepareStatement("update " + TABLE_NAME + " set " + STATUS_COLUMN + " = ?" + ", " +
                 DONE_AT_COLUMN + " = ? where " + ID_COLUMN + " = ?;");
-        preparedStatement.setBoolean(1, true);
+        updateList.setBoolean(1, true);
         // Getting the current date in java.sql.Date format
         java.util.Date utilDate = new java.util.Date();
         Object sqlDate = new Timestamp(utilDate.getTime());
-        preparedStatement.setObject(2, sqlDate);
-        preparedStatement.setInt(3, listId);
+        updateList.setObject(2, sqlDate);
+        updateList.setInt(3, listId);
 
-        int updatedRows = preparedStatement.executeUpdate();
-        preparedStatement.close();
+        int updatedRows = updateList.executeUpdate();
+        updateList.close();
+
+        // Marking all tasks in the list as done
+        PreparedStatement updateTasks = connection.prepareStatement("update " + ListItemOperations.TABLE_NAME + " set " + ListItemOperations.STATUS_COLUMN + " = ?" + ", " +
+                ListItemOperations.DONE_AT_COLUMN + " = ? where " + ListItemOperations.LIST_ID_COLUMN + " = ?;");
+        updateTasks.setBoolean(1, true);
+        updateTasks.setObject(2, sqlDate);
+        updateTasks.setInt(3, listId);
+
+        int updatedTasks = updateTasks.executeUpdate();
+        updateTasks.close();
+
         connection.close();
 
         boolean successfulOperation = false;
