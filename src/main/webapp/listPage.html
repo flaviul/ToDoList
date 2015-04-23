@@ -19,12 +19,12 @@
     <div id="sitebranding">
         <h1 id="headerText"><a id="logincolor" href="login.html">My To-Do List</a></h1>
     </div>
-    <div id="tagline">
-        <p>View all items in your To-Do List</p>
-    </div>
 </div>
 
 <div id="content">
+    <div id="user-details">
+        <p>Logged in as: <span id="current-user"></span></p>
+    </div>
 
     <div id="lists-container">
         <h1 id="toDoList">Active to-do lists</h1>
@@ -56,7 +56,7 @@
 
     <div id="current-list-details">
         <h1 id="currentTasks">Current tasks</h1>
-        <h2 id="current-list-title"></h2>
+        <h2>Checklist name: <span id="current-list-title"></span></h2>
 
         <div class="hidden confirmation-message" id="task-done-message">
             <p>Item marked as done</p>

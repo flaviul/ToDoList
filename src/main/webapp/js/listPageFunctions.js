@@ -11,6 +11,7 @@ function showActiveLists() {
         method: 'POST'
     })
         .done(function (response) {
+            displayUsername(response);
             generateListElements(response);
         });
 }
@@ -194,5 +195,9 @@ function saveNewTask() {
         $('.confirmation-message').hide();
     }
 })();
+
+function displayUsername(json){
+    document.getElementById('current-user').innerHTML = json.userName;
+}
 
 showActiveLists();

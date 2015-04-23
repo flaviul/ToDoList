@@ -2,24 +2,15 @@
     position: fixed;
     left: 580px;
     color: black;
-    top: -20px;
-}
-
-
-#tagline{
-    position: fixed;
-    left:100px;
 
 }
 
 #bodyimage{
-    background: url("/images/woodbackground.jpg") no-repeat center center fixed;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;;
-
+    background-image: url("/images/woodbackground.jpg") ;
+    background-size: 1370px 700px;
+    background-repeat: no-repeat;;
 }
+
 
 
 #current-list-details{
@@ -31,7 +22,7 @@
     border: 1px solid black;
     opacity:0.6;
     width: 520px;
-    height: 440px;
+    height: 400px;
     padding-top: 25px;
     padding-right: 50px;
     padding-bottom: 25px;
@@ -48,7 +39,7 @@
     border: 1px solid black;
     opacity:0.6;
     width: 520px;
-    height: 440px;
+    height: 400px;
     padding-top: 25px;
     padding-right: 50px;
     padding-bottom: 25px;
@@ -170,10 +161,14 @@
     color: #d8d4ea;
 }
 
-.hidden{
+.hidden {
     display: none;
 }
 
-#tagline{
-    display: none;
+#user-details {
+    color: white;
+}
+
+li {
+    list-style: none;
 }

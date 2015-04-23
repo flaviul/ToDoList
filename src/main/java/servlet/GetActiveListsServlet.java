@@ -1,5 +1,6 @@
 package servlet;
 
+import postgres.LoginOperations;
 import postgres.ToDoListOperations;
 
 import javax.servlet.http.HttpServlet;
@@ -22,6 +23,14 @@ public class GetActiveListsServlet extends HttpServlet {
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(true);
         int currentUserId = (Integer)session.getAttribute(LoginServlet.USER_ID_PARAMETER);
+        String userName = "";
+        try {
+            userName = LoginOperations.getUsername(currentUserId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
         // Getting all active lists from the database
         List<String> activeLists = new ArrayList<String>();
@@ -51,9 +60,9 @@ public class GetActiveListsServlet extends HttpServlet {
 
         // Building the json object containing the names of all active lists
         int listsCount = activeLists.size();
-        String jsonObject = "{\"lists\": [";
+        String jsonObject = "{\"userName\": \"" + userName + "\", ";
         if (listsCount > 0) {
-
+            jsonObject += "\"lists\": [";
             for (int i = 0; i < listsCount; i++) {
                 jsonObject += "\"" + activeLists.get(i) + "\"";
                 if (i < listsCount - 1) {
@@ -62,7 +71,7 @@ public class GetActiveListsServlet extends HttpServlet {
             }
             jsonObject += "]}";
         } else {
-            jsonObject = "{\"noActiveLists\":true}";
+            jsonObject += "\"noActiveLists\":true}";
         }
 
         // Sending over the json object
