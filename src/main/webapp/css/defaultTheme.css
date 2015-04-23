@@ -2,27 +2,30 @@
     position: fixed;
     left: 580px;
     color: black;
-
+    top: -20px;
 }
 
 #bodyimage{
-    background-image: url("/images/woodbackground.jpg") ;
-    background-size: 1370px 700px;
-    background-repeat: no-repeat;;
+    background: url("/images/woodbackground.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;;
+
 }
 
 
 
 #current-list-details{
     position: fixed;
-    left:680px;
+    left:660px;
     bottom:100px;
     font-family: 'Dancing Script', Georgia, Times, serif;
     background-color: #ffffff;
     border: 1px solid black;
     opacity:0.6;
-    width: 520px;
-    height: 400px;
+    width: 480px;
+    height: 440px;
     padding-top: 25px;
     padding-right: 50px;
     padding-bottom: 25px;
@@ -33,13 +36,13 @@
 
 #lists-container{
     position: fixed;
-    left:60px;
+    left:80px;
     bottom: 100px;
     background-color: #ffffff;
     border: 1px solid black;
     opacity:0.6;
-    width: 520px;
-    height: 400px;
+    width: 480px;
+    height: 440px;
     padding-top: 25px;
     padding-right: 50px;
     padding-bottom: 25px;
@@ -171,4 +174,8 @@
 
 li {
     list-style: none;
+}
+
+#viewlist{
+    display: none;
 }
