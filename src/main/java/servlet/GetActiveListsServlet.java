@@ -11,7 +11,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Flaviu Ratiu on 06/04/2015.
@@ -22,7 +24,7 @@ public class GetActiveListsServlet extends HttpServlet {
 
     public void service(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession(true);
-        int currentUserId = (Integer)session.getAttribute(LoginServlet.USER_ID_PARAMETER);
+        int currentUserId = (Integer) session.getAttribute(LoginServlet.USER_ID_PARAMETER);
         String userName = "";
         try {
             userName = LoginOperations.getUsername(currentUserId);
@@ -34,6 +36,7 @@ public class GetActiveListsServlet extends HttpServlet {
 
         // Getting all active lists from the database
         List<String> activeLists = new ArrayList<String>();
+        List<String> latestList = new ArrayList<String>();
         if (Boolean.valueOf(request.getParameter(GET_LISTS_PARAMETER))) {
             try {
                 activeLists = ToDoListOperations.activeLists(currentUserId);
@@ -45,10 +48,9 @@ public class GetActiveListsServlet extends HttpServlet {
                 response.sendError(400, "Failed to load jdbc driver.");
             }
         }
-        else if (Boolean.valueOf(request.getParameter(GET_LATEST_LIST_PARAMETER))){
+        if (Boolean.valueOf(request.getParameter(GET_LATEST_LIST_PARAMETER))) {
             try {
-                activeLists.clear();
-                activeLists.add(ToDoListOperations.getLatestList(currentUserId));
+                latestList.add(ToDoListOperations.getLatestList(currentUserId));
             } catch (SQLException e) {
                 e.printStackTrace();
                 response.sendError(400, "SQL errors encountered.");
@@ -69,7 +71,7 @@ public class GetActiveListsServlet extends HttpServlet {
                     jsonObject += ", ";
                 }
             }
-            jsonObject += "]}";
+            jsonObject += "], \"latestList\": \"" + latestList.get(0) + "\"}";
         } else {
             jsonObject += "\"noActiveLists\":true}";
         }
