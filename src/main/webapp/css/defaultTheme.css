@@ -179,3 +179,7 @@ li {
 #viewlist{
     display: none;
 }
+
+#checklist{
+    font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
+}
