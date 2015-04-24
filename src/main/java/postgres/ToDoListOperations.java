@@ -1,5 +1,6 @@
 package postgres;
 
+import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class ToDoListOperations {
     public static final String STATUS_COLUMN = "done";
     public static final String DONE_AT_COLUMN = "done_at";
 
-    public static boolean addList(int userId, String listName) throws SQLException, ClassNotFoundException {
+    public static boolean addList(int userId, String listName) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
@@ -40,7 +41,7 @@ public class ToDoListOperations {
         return successfulOperation;
     }
 
-    public static List<String> activeLists(int userId) throws SQLException, ClassNotFoundException {
+    public static List<String> activeLists(int userId) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
@@ -80,7 +81,7 @@ public class ToDoListOperations {
         return listId;
     }
 
-    public static int connectAndGetListId(int userId, String listName) throws SQLException, ClassNotFoundException {
+    public static int connectAndGetListId(int userId, String listName) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
         int listId = getListId(userId, listName, connection);
@@ -88,7 +89,7 @@ public class ToDoListOperations {
         return listId;
     }
 
-    public static String getLatestList(int userId) throws SQLException, ClassNotFoundException {
+    public static String getLatestList(int userId) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
@@ -111,7 +112,7 @@ public class ToDoListOperations {
         return latestList;
     }
 
-    public static boolean markListDone(int userId, String listName) throws SQLException, ClassNotFoundException {
+    public static boolean markListDone(int userId, String listName) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 

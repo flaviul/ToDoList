@@ -1,5 +1,6 @@
 package postgres;
 
+import java.beans.PropertyVetoException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class ListItemOperations {
     public static final String DONE_AT_COLUMN = "done_at";
 
 
-    public static boolean addItem(String listName, String itemContent) throws SQLException, ClassNotFoundException {
+    public static boolean addItem(String listName, String itemContent) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
@@ -58,7 +59,7 @@ public class ListItemOperations {
         return successfulOperation;
     }
 
-    public static List<String> getCurrentTasks(int parentListId) throws SQLException, ClassNotFoundException {
+    public static List<String> getCurrentTasks(int parentListId) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
@@ -79,7 +80,7 @@ public class ListItemOperations {
         return currentTasks;
     }
 
-    public static boolean markTaskDone(int userId, String parentListName, String taskContent) throws SQLException, ClassNotFoundException {
+    public static boolean markTaskDone(int userId, String parentListName, String taskContent) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 

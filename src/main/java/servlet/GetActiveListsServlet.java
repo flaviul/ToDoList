@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -32,6 +33,8 @@ public class GetActiveListsServlet extends HttpServlet {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
+        } catch (PropertyVetoException e) {
+            e.printStackTrace();
         }
 
         // Getting all active lists from the database
@@ -46,6 +49,8 @@ public class GetActiveListsServlet extends HttpServlet {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 response.sendError(400, "Failed to load jdbc driver.");
+            } catch (PropertyVetoException e) {
+                e.printStackTrace();
             }
         }
         if (Boolean.valueOf(request.getParameter(GET_LATEST_LIST_PARAMETER))) {
@@ -57,6 +62,8 @@ public class GetActiveListsServlet extends HttpServlet {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 response.sendError(400, "Failed to load jdbc driver.");
+            } catch (PropertyVetoException e) {
+                e.printStackTrace();
             }
         }
 

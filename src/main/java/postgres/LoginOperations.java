@@ -1,5 +1,6 @@
 package postgres;
 
+import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +15,7 @@ public class LoginOperations {
     public static final String ID_COLUMN = "id";
     public static final String NAME_COLUMN = "name";
 
-    public static int getUserId(String username) throws SQLException, ClassNotFoundException {
+    public static int getUserId(String username) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 
@@ -33,7 +34,7 @@ public class LoginOperations {
         return userId;
     }
 
-    public static String getUsername(int userId) throws SQLException, ClassNotFoundException {
+    public static String getUsername(int userId) throws SQLException, ClassNotFoundException, PropertyVetoException {
         PostgresConnection postgres = new PostgresConnection();
         Connection connection = postgres.getConnection();
 

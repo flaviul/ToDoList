@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.beans.PropertyVetoException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -38,6 +39,8 @@ public class GetCurrentTasksServlet extends HttpServlet{
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
                 response.sendError(400, "Failed to load jdbc driver.");
+            } catch (PropertyVetoException e) {
+                e.printStackTrace();
             }
         }
 
