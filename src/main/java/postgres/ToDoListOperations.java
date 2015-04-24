@@ -132,10 +132,11 @@ public class ToDoListOperations {
 
         // Marking all tasks in the list as done
         PreparedStatement updateTasks = connection.prepareStatement("update " + ListItemOperations.TABLE_NAME + " set " + ListItemOperations.STATUS_COLUMN + " = ?" + ", " +
-                ListItemOperations.DONE_AT_COLUMN + " = ? where " + ListItemOperations.LIST_ID_COLUMN + " = ?;");
+                ListItemOperations.DONE_AT_COLUMN + " = ? where " + ListItemOperations.LIST_ID_COLUMN + " = ? and "+ ListItemOperations.STATUS_COLUMN + " != ?;");
         updateTasks.setBoolean(1, true);
         updateTasks.setObject(2, sqlDate);
         updateTasks.setInt(3, listId);
+        updateTasks.setBoolean(4, true);
 
         int updatedTasks = updateTasks.executeUpdate();
         updateTasks.close();
