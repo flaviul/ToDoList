@@ -30,9 +30,9 @@ public class PostgresConnection {
         cpds.setPassword("fasttrackit_dev");
 
         // the settings below are optional -- c3p0 can work with defaults
-        cpds.setMinPoolSize(5);
-        cpds.setAcquireIncrement(5);
-        cpds.setMaxPoolSize(20);
+//        cpds.setMinPoolSize(5);
+//        cpds.setAcquireIncrement(5);
+//        cpds.setMaxPoolSize(20);
         connection = cpds.getConnection();
     }
 

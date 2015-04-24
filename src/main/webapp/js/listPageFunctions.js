@@ -11,10 +11,22 @@ function showActiveLists() {
         method: 'POST'
     })
         .done(function (response) {
-            displayUsername(response);
-            generateListElements(response);
-            showCurrentListDetails(response.latestList);
+            if (isAccessAllowed(response)) {
+                displayUsername(response);
+                generateListElements(response);
+                showCurrentListDetails(response.latestList);
+            }
         });
+}
+
+function isAccessAllowed(json){
+    if (json.accessDenied){
+        alert('Please log in to your account.');
+            window.location = './login.html';
+        return false;
+    } else {
+        return true;
+    }
 }
 
 function generateListElements(json) {
@@ -183,8 +195,21 @@ function saveNewTask() {
     }
 })();
 
-function displayUsername(json){
+function displayUsername(json) {
     document.getElementById('current-user').innerHTML = json.userName;
 }
+
+(function () {
+    document.getElementById('logout').onclick = function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: './logoutServlet',
+            method: 'GET'
+        })
+            .done(function () {
+                window.location = './login.html';
+            });
+    }
+})();
 
 showActiveLists();

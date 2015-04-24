@@ -168,7 +168,7 @@
     display: none;
 }
 
-#user-details {
+#user-details, #logout {
     color: white;
 }
 

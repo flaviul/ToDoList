@@ -12,22 +12,26 @@
 </head>
 
 
-<body class ="bodycontent" id ="bodyimage">
+<body class="bodycontent" id="bodyimage">
 
 
 <div id="header">
     <div id="sitebranding">
-        <h1 id="headerText"><a id="logincolor" href="login.html">My To-Do List</a></h1>
+        <h1 id="headerText"><a id="logincolor" href="./listPage.html">My To-Do List</a></h1>
     </div>
 </div>
 
 <div id="content">
     <div id="user-details">
-        <p>Logged in as: <span id="current-user"></span></p>
+        <p>Logged in as: <span id="current-user"></span>
+            <br/>
+            <a href="#" id="logout">Log out</a>
+        </p>
     </div>
 
     <div id="lists-container">
         <h1 id="toDoList">Active to-do lists</h1>
+
         <div id="no-lists-message" class="hidden">
             <p>Currently there are no to-do lists defined. Please create one.</p>
         </div>
@@ -56,6 +60,7 @@
 
     <div id="current-list-details">
         <h1 id="currentTasks">Current tasks</h1>
+
         <h2 id="checklist">Checklist name: <span id="current-list-title"></span></h2>
 
         <div class="hidden confirmation-message" id="task-done-message">
@@ -89,7 +94,6 @@
 
     </div>
 </div>
-
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
